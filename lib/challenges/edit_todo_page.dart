@@ -1,0 +1,112 @@
+import 'package:b201_flutter_workshop/challenges/theme.dart';
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+class EditTodoPage extends StatefulWidget {
+  const EditTodoPage({Key? key}) : super(key: key);
+
+  @override
+  State<EditTodoPage> createState() => _EditTodoPageState();
+}
+
+class _EditTodoPageState extends State<EditTodoPage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: AppBar(
+        backgroundColor: blueColor,
+        title: Text(
+          "Edit Todo",
+          style: GoogleFonts.poppins(
+            fontSize: 20,
+            fontWeight: semiBold,
+          ),
+        ),
+      ),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 30,
+          ),
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 30,
+              ),
+              TextFormField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  label: Text(
+                    "title",
+                    style: GoogleFonts.poppins(
+                      fontWeight: reguler,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+              TextFormField(
+                maxLines: 5,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  label: Text(
+                    "detail",
+                    style: GoogleFonts.poppins(
+                      fontWeight: reguler,
+                    ),
+                  ),
+                  labelStyle: GoogleFonts.poppins(),
+                ),
+              ),
+              Spacer(),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ButtonStyle(
+                      elevation: MaterialStateProperty.all(0),
+                      padding: MaterialStateProperty.all(
+                        EdgeInsets.symmetric(vertical: 10),
+                      ),
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      backgroundColor: MaterialStateProperty.all(blueColor)),
+                  onPressed: () {},
+                  child: Text(
+                    "SUBMIT",
+                    style: GoogleFonts.poppins(
+                      fontWeight: medium,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 30,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// ElevatedButton.styleFrom(
+//                     elevation: 0,
+//                     padding: const EdgeInsets.symmetric(
+//                       vertical: 12,
+//                     ),
+//                     shape: RoundedRectangleBorder(
+//                       borderRadius: BorderRadius.circular(10),
+//                     ),
+//                   ),
