@@ -1,15 +1,36 @@
 import 'package:b201_flutter_workshop/challenges/theme.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class EditTodoPage extends StatefulWidget {
-  const EditTodoPage({Key? key}) : super(key: key);
+  final String? id;
+  final String title;
+  final String detail;
+  const EditTodoPage({
+    Key? key,
+    required this.id,
+    required this.title,
+    required this.detail,
+  }) : super(key: key);
 
   @override
   State<EditTodoPage> createState() => _EditTodoPageState();
 }
 
 class _EditTodoPageState extends State<EditTodoPage> {
+  TextEditingController titleController = TextEditingController();
+  TextEditingController detailController = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    titleController = TextEditingController(text: widget.title);
+    detailController = TextEditingController(text: widget.detail);
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,6 +67,7 @@ class _EditTodoPageState extends State<EditTodoPage> {
                     ),
                   ),
                 ),
+                controller: titleController,
               ),
               const SizedBox(
                 height: 30,
@@ -64,6 +86,7 @@ class _EditTodoPageState extends State<EditTodoPage> {
                   ),
                   labelStyle: GoogleFonts.poppins(),
                 ),
+                controller: detailController,
               ),
               Spacer(),
               SizedBox(
@@ -80,7 +103,28 @@ class _EditTodoPageState extends State<EditTodoPage> {
                         ),
                       ),
                       backgroundColor: MaterialStateProperty.all(blueColor)),
-                  onPressed: () {},
+                  onPressed: () {
+                    final doc = FirebaseFirestore.instance
+                        .collection("todos")
+                        .doc(widget.id);
+                    doc.update({
+                      "id": widget.id,
+                      "titleTodo": titleController.text,
+                      "detailTodo": detailController.text,
+                    }).then((value) {
+                      final snackBar = SnackBar(
+                        backgroundColor: blueColor,
+                        content: Text(
+                          "Data berhasil diperbaharui!",
+                          style: GoogleFonts.poppins(
+                            color: Colors.white,
+                          ),
+                        ),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    });
+                    Navigator.pop(context);
+                  },
                   child: Text(
                     "SUBMIT",
                     style: GoogleFonts.poppins(

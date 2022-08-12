@@ -1,10 +1,21 @@
 import 'package:b201_flutter_workshop/challenges/edit_todo_page.dart';
 import 'package:b201_flutter_workshop/challenges/theme.dart';
+import 'package:b201_flutter_workshop/challenges/todo_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class DetailTodoPage extends StatefulWidget {
-  const DetailTodoPage({Key? key}) : super(key: key);
+  final String? id;
+  final String title;
+  final String detail;
+
+  const DetailTodoPage({
+    Key? key,
+    required this.id,
+    required this.title,
+    required this.detail,
+  }) : super(key: key);
 
   @override
   State<DetailTodoPage> createState() => _DetailTodoPageState();
@@ -23,7 +34,11 @@ class _DetailTodoPageState extends State<DetailTodoPage> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const EditTodoPage(),
+                    builder: (context) => EditTodoPage(
+                      id: widget.id,
+                      title: widget.title,
+                      detail: widget.detail,
+                    ),
                   ),
                 );
               },
@@ -59,11 +74,11 @@ class _DetailTodoPageState extends State<DetailTodoPage> {
                 height: 30,
               ),
               Text(
-                "Todo Title",
+                widget.title,
                 style: GoogleFonts.poppins(fontWeight: semiBold, fontSize: 24),
               ),
               Text(
-                "This is some todo details that you supposesdd to write right now",
+                widget.detail,
                 style: GoogleFonts.poppins(fontWeight: reguler, fontSize: 14),
               ),
               Spacer(),
@@ -81,7 +96,13 @@ class _DetailTodoPageState extends State<DetailTodoPage> {
                         ),
                       ),
                       backgroundColor: MaterialStateProperty.all(blueColor)),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.popAndPushNamed(context, "/main");
+                    final doc = FirebaseFirestore.instance
+                        .collection("todos")
+                        .doc(widget.id);
+                    doc.update({"isDone": true});
+                  },
                   child: Text(
                     "MARK AS DONE",
                     style: GoogleFonts.poppins(

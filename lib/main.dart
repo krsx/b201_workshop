@@ -2,12 +2,16 @@ import 'package:b201_flutter_workshop/challenges/add_todo_page.dart';
 import 'package:b201_flutter_workshop/challenges/detail_todo_page.dart';
 import 'package:b201_flutter_workshop/challenges/edit_todo_page.dart';
 import 'package:b201_flutter_workshop/challenges/main_page.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/material.dart';
 
 import 'challenges/splash_page.dart';
 
-void main() {
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
   runApp(const MyApp());
 }
 
@@ -34,8 +38,14 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => const SplashPage(),
         '/main': (context) => const MainPage(),
-        '/edit': (context) => const EditTodoPage(),
-        '/detail': (context) => const DetailTodoPage(),
+        // '/edit': (context) => const EditTodoPage(
+        //       title: "",
+        //       detail: "",
+        //     ),
+        // '/detail': (context) => const DetailTodoPage(
+        //       title: "",
+        //       detail: "",
+        //     ),
         '/add': (context) => const AddTodoPage(),
       },
     );

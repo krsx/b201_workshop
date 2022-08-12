@@ -1,5 +1,6 @@
 import 'package:b201_flutter_workshop/challenges/theme.dart';
 import 'package:b201_flutter_workshop/challenges/todo_model.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -90,13 +91,14 @@ class _AddTodoPageState extends State<AddTodoPage> {
                     backgroundColor: MaterialStateProperty.all(blueColor),
                   ),
                   onPressed: () {
+                    createTodos(TodoModel(
+                      title: titleController.text,
+                      detail: detailController.text,
+                      isDone: false,
+                    ));
                     Navigator.pushNamed(
                       context,
                       "/main",
-                      arguments: TodoModel(
-                        title: titleController.text,
-                        detail: detailController.text,
-                      ),
                     );
                   },
                   child: Text(
@@ -116,6 +118,26 @@ class _AddTodoPageState extends State<AddTodoPage> {
         ),
       ),
     );
+  }
+
+  Future createTodos(TodoModel todo) async {
+    final doc = FirebaseFirestore.instance.collection("todos").doc();
+
+    todo.id = doc.id;
+    final json = todo.toJson();
+
+    await doc.set(json).then((value) {
+      final snackBar = SnackBar(
+        backgroundColor: blueColor,
+        content: Text(
+          "Data berhasil dikirim!",
+          style: GoogleFonts.poppins(
+            color: Colors.white,
+          ),
+        ),
+      );
+      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    });
   }
 
   @override

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "230628640219",
+    "project_id": "b201-workshop-todo",
+    "storage_bucket": "b201-workshop-todo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:230628640219:android:0e264cf8abe6e0057113fe",
+        "android_client_info": {
+          "package_name": "com.example.b201_flutter_workshop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "230628640219-itv2e2bqsnbm337ori63rkt73hjmngcf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiLNRGYR7h34wVv56sgVEkpptwm8LjBI0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "230628640219-itv2e2bqsnbm337ori63rkt73hjmngcf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
