@@ -198,7 +198,23 @@ class _MainPageState extends State<MainPage> {
                   width: 14,
                 ),
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    final doc = FirebaseFirestore.instance
+                        .collection("todos")
+                        .doc(todo.id);
+                    doc.delete().then((value) {
+                      final snackBar = SnackBar(
+                        backgroundColor: blueColor,
+                        content: Text(
+                          "Data berhasil dihapus!",
+                          style: GoogleFonts.poppins(
+                            color: Colors.white,
+                          ),
+                        ),
+                      );
+                      ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                    });
+                  },
                   child: const Icon(Icons.delete),
                 ),
                 const SizedBox(
